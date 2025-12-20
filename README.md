@@ -49,6 +49,16 @@ gpick 1 -db        # Mostra configuração do banco de dados
 gpick 1 -r         # Abre repositório no navegador
 ```
 
+### Backup Automático
+```bash
+hypr-backup        # Faz backup das configurações para o GitHub
+```
+
+Esta função automaticamente:
+- Copia as configurações atuais do Hyprland e Zsh
+- Faz commit com timestamp
+- Envia para o GitHub
+
 ## 📝 Notas
 
 - Cursor configurado: Future-black-cursors (24px)
