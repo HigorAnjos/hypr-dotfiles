@@ -88,7 +88,7 @@ setopt appendhistory
 
 # exports
 # export LC_TIME=ur_PK.UTF-8
-export PATH="$HOME/.tmuxifier/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.tmuxifier/bin:$PATH"
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 eval "$(zoxide init zsh)"
 eval "$(tmuxifier init -)"
@@ -227,3 +227,37 @@ alias mclone='gpick'
 function mottu() {
     cd "$HOME/mottu"
 }
+
+# Função para fazer backup das configurações do Hyprland
+function hypr-backup() {
+    echo "🔄 Fazendo backup das configurações..."
+    
+    # Copiar arquivos atualizados
+    cp -r ~/.config/hypr ~/hypr-dotfiles/
+    cp ~/.zshrc ~/hypr-dotfiles/
+    
+    # Atualizar README com data
+    cd ~/hypr-dotfiles
+    
+    # Commit e push
+    git add .
+    git commit -m "Update: $(date '+%Y-%m-%d %H:%M')"
+    git push origin main
+    
+    echo "✅ Backup concluído e enviado para o GitHub!"
+}
+
+# OpenClaw Completion
+source "/home/higor/.openclaw/completions/openclaw.zsh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/higor/mottu/hack-the-garage/google-cloud-sdk/path.zsh.inc' ]; then . '/home/higor/mottu/hack-the-garage/google-cloud-sdk/path.zsh.inc'; fi
+
+source "$HOME/.config/mottu/mottu_user_profile.sh"
+source "$HOME/.config/mottu/mottu_dev_tools.sh"
+source "$HOME/.config/mottu/mottu_rmq.sh"
+# Added by LM Studio CLI tool (lms)
+export PATH="$PATH:/home/higor/.lmstudio/bin"
+
+# opencode
+export PATH=/home/higor/.opencode/bin:$PATH
