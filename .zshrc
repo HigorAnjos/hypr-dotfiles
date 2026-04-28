@@ -5,16 +5,34 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="refined"
 
-plugins=( 
+VI_MODE_SET_CURSOR=true
+VI_MODE_CURSOR_NORMAL=2
+VI_MODE_CURSOR_INSERT=6
+MODE_INDICATOR="%F{red}[N]%f"
+INSERT_MODE_INDICATOR="%F{green}[I]%f"
+
+plugins=(
     git
     archlinux
     zsh-autosuggestions
     zsh-syntax-highlighting
+    vi-mode
 )
 
 
 
 source $ZSH/oh-my-zsh.sh
+
+# Vi mode: prompt symbol muda entre modos (❯ insert, ❮ normal)
+function _vi_prompt_symbol() {
+  if [[ ${VI_KEYMAP:-main} == vicmd ]]; then
+    echo "%F{red}❮%f "
+  else
+    echo "%(?.%F{magenta}.%F{red})❯%f "
+  fi
+}
+PROMPT='$(_vi_prompt_symbol)'
+RPROMPT='$(vi_mode_prompt_info)'
 
 
 # Check archlinux plugin commands here
@@ -247,6 +265,9 @@ function hypr-backup() {
     echo "✅ Backup concluído e enviado para o GitHub!"
 }
 
+# OpenClaw Gateway Token
+export OPENCLAW_GATEWAY_TOKEN=f43b06b39a0133a803328ed1064444d9ea262f77fcb4997f
+
 # OpenClaw Completion
 source "/home/higor/.openclaw/completions/openclaw.zsh"
 
@@ -261,3 +282,11 @@ export PATH="$PATH:/home/higor/.lmstudio/bin"
 
 # opencode
 export PATH=/home/higor/.opencode/bin:$PATH
+
+# Vi mode extras
+bindkey -M viins 'jj' vi-cmd-mode
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
